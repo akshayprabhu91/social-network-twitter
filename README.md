@@ -1,8 +1,6 @@
 # social-network-twitter
 Social networking website similar to twitter.com
 
-My Role: Team Lead.
-
 Technology: Core Java, Java EE (JSF), JDBC, GlassFish Server, MySQL, JQuery, Bootstrap.
 
 Description:
