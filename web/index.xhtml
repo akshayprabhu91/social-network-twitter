@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Twitter. It's what's happening.</title>
+        <link href="Stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/myStyle/Style.css" rel="stylesheet" type="text/css"/>
+        <link rel="Twitter icon" type="image/x-icon" href="Images/twitterico.ico" />
+    </h:head>
+    <h:body style="background-image: url(Images/tweet.jpg)">
+        <h:form>
+            <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom"  style="background-image: url(Images/nav.jpg); height: 100px">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                        </button>
+                        <img src="Images/twitterico.ico" alt="Twitter" /><a class="navbar-brand" href="index.xhtml">Twitter</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="hidden">
+                                <a href="#page-top"></a>
+                            </li>
+                            <li class="col-lg-8">
+                                <p class="navbar-btn" >
+                                    <a href="login.xhtml" class="btn btn-info btn btn-block" style="color: white;box-shadow: 0 0 100px transparent">Login</a>
+                                </p>
+                            </li>
+
+                            <li class="col-lg-8">
+                                <p class="navbar-btn">
+                                    <a href="signUp.xhtml" class="btn btn-danger btn btn-block" style="color:white;box-shadow: 0 0 100px transparent">Sign Up</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                <div class="panel panel-default" style="height: 350px; width: 320px; margin-top: 240px; margin-left: 100px;background-color: #2378F8; box-shadow:0 0 100px #d9edf7 ">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <h2 style="text-align: left; color:white"><b>Login to your account</b></h2>
+
+                            <h:outputLabel value="#{allUsers.passResetmsgs}"></h:outputLabel>
+
+                            <h:outputLabel value="#{allUsers.errMsg}"></h:outputLabel>
+
+                        </div>        
+                        <div class="form-group" style="width: 300px">
+                            <h:message for="username"/>
+                            <h:inputText  p:placeholder="Username" style="border-style: inset" id="username" required ="true" 
+                                          requiredMessage="The login field cannot be empty"
+                                          validatorMessage="Username cannot have special characters"
+                                          title="Please enter your Login ID"
+                                          value="#{allUsers.userName}"
+                                          styleClass="form-control">
+                                <f:validateRegex pattern="^[a-zA-Z0-9_.]+$"/>
+                            </h:inputText>
+                        </div>    
+
+                        <div class="form-group" style="width: 300px">
+                            <h:message for="password"/>
+                            <h:inputSecret p:placeholder="Password" style="border-style: inset" id="password" required ="true" 
+                                           requiredMessage="The password field cannot be empty"
+                                           title="Please enter your password"
+                                           value="#{allUsers.password}"
+                                           styleClass="form-control">
+                            </h:inputSecret>
+                        </div>
+                        <center><div class="form-group">
+                                <h:commandButton style="font-family: monospace; color: white; width:300px;" id="submit" value="Log In"
+                                                 action="#{allUsers.login()}" 
+                                                 styleClass="btn btn-info btn-lg"/> 
+                                <center><br/><br/>&#xA0;&#xA0; <h:link outcome="ForgotPassword.xhtml" style="color: white">Forgot Password?</h:link></center>
+                            </div>
+                        </center>               
+                    </div>
+                </div> 
+            </div>    
+
+        </h:form>
+        <script src="Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+        <script src="Stylesheet/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    </h:body>
+</html>
+

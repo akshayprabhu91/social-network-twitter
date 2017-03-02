@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11 Nov, 2016, 2:19:44 PM
+    Author     : SONY
+*/
+
+html, body {height: 100%;}
+
+input {
+    max-width: 280px;
+}
+
+.table {
+    border-radius: 5px;
+    width: 80%;
+    float: none;
+}
+
+select{
+    max-width: 380px;
+}
+
+textarea{
+    max-width: 380px;
+}
+
+#hrStyle {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
