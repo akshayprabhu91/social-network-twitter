@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Twitter / Homepage</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="refresh"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="Twitter icon" type="image/x-icon" href="Images/twitterico.ico" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="container-fluid" id="top">
+                <div class="form-group">
+                    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+                        <div class="navbar-header page-scroll">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-left">
+                                    <li class="page-scroll">
+                                        <a href="#top">Home</a>
+                                    </li>
+                                    <li class="page-scroll">
+                                        <h:commandLink action="messages.xhtml" value="Messages"/>
+                                    </li>
+                                    <li class="page-scroll">
+                                        <h:commandLink action="settings.xhtml" value="Profile and Settings"/>
+                                    </li>
+                                    <li class="page-scroll">
+                                        <h:commandLink action="#{allUsers.logout()}" value="Logout"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div style="margin-top: 85px" class="col-md-offset-4">
+                    <div class="form-group">
+                        <h:inputText id="searchStr" value="#{tweetManagerBean.searchStr}" p:placeholder="Find people" styleClass="form-control" style="width: 380px"/>
+                        <div style="padding-top: 10px" class="col-md-offset-1">
+                            <h:commandButton value="SEARCH" 
+                                             action="#{tweetManagerBean.searchUsers()}" 
+                                             styleClass="btn btn-primary" 
+                                             style="width: 160px"/>
+                        </div>   
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px">
+                    <div class="col-md-3" align="left">
+                        <h:graphicImage url="#{allUsers.img}" style="width: 300px; height: 300px"/>
+                        <div class="col-md-offset-1">
+                            <h1><h:outputText value="#{allUsers.fullName}"/></h1>
+                            <div class="col-md-offset-1">
+                                <h4>@<h:outputText value="#{allUsers.userName}"/></h4>                                
+                            </div>
+                        </div>
+                        <hr/>
+                        <div>
+                            <div class="col-md-3">
+                                <h6><h:outputText value="TWEETS"/></h6>
+                                <div align="center">
+                                    <b><h:outputText value="#{tweetManagerBean.fetchTweetCount()}" style="font-size: 34px"/></b>
+                                </div>
+                            </div>    
+                            <div class="col-md-4">
+                                <h6><h:outputText value="FOLLOWING"/></h6>
+                                <div align="center">
+                                    <b><h:outputText value="#{tweetManagerBean.getFollowingCount()}" style="font-size: 34px"/></b>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <h6><h:outputText value="FOLLOWERS"/></h6>
+                                <div align="center">
+                                    <b><h:outputText value="#{tweetManagerBean.getFollowersCount()}" style="font-size: 34px"/></b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-offset-2">
+                                <h3><h:outputText value="Top ten trends"/></h3>
+                            </div>
+                            <div>
+                                <h:dataTable value="#{tweetManagerBean.calculateTrends()}" var="index" styleClass="table">
+                                    <h:column>
+                                        <h4><h:outputText value="#{index} tweets"></h:outputText></h4>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-4" style="padding-top: 25px">
+                        <h:inputTextarea value="#{tweetManagerBean.tweetStr}" class="tweetbox" style="width: 380px; height: 110px" p:placeholder="What's Happening?" styleClass="form-control max">
+                            <f:validateLength maximum="140" minimum="0" />
+                        </h:inputTextarea><br/>
+                        <div id="tweetcount"></div>
+                        <div style="padding-top: 10px" class="col-md-offset-1">
+                            <h:commandButton id="tweetButton" value="TWEET" action="#{tweetManagerBean.addTweet()}" styleClass="btn btn-primary" style="width: 160px"/>
+                        </div>
+                        <div class="form-group col-md-6" style="padding-top: 70px">
+                            <hr/>
+                            <ui:repeat var='index' value="#{tweetManagerBean.fetchTweets()}">
+                                <b><h:outputText value="#{index.fullName}" style="font-size: 24px"/></b>
+                                <h:outputText value="&nbsp;@#{index.userName}" style="font-size: 20px"/><br/>
+                                <h:outputText value="#{index.tweet}" style="font-size: 20px"/><br/>
+                                <h:outputText style="font-size: 16px" value="Tweeted on #{index.period}"/><br />
+                                <h:outputText value="#{index.numOfLikes} Likes so far" style="font-size: 14px"/><br/><br/>
+                                <h:commandLink style="font-size: 14px" value="#{index.likeOrUnlike}" action="#{tweetManagerBean.likeOrUnlike(index.likeOrUnlike, index.userName, index.tweet)}"/>&nbsp;
+                                <h:commandLink style="font-size: 14px" value="Retweet" action="#{tweetManagerBean.reTweet(index.userName, index.tweet)}"/><br />
+                                <h:outputText value="#{index.isRetweeted}" style="font-size: 12px"/><br/><br/>
+                                <hr/>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <script src="Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+        <script src="Stylesheet/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script>
+            
+            $("#tweetcount").html("140 characters remaining");
+
+            $("textarea").on("keyup", function () {
+                var text_max = 140;
+                var text_length = $("textarea").val().length;
+                var text_remaining = text_max - text_length;
+                $("#tweetcount").html(text_remaining + " characters remaining");
+
+                if (text_remaining &lt; 0) {
+                    $("input[id='j_idt5:tweetButton']").attr("disabled", true);
+                }
+                else{
+                    $("input[id='j_idt5:tweetButton']").attr("disabled", false);
+                }
+            });
+            
+            $(document).ready(function () {
+                $("textarea").val("");
+                
+                window.alert = function () {}
+            });
+
+        </script>
+    </h:body>
+</html>

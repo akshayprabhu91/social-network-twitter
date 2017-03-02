@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Twitter / Messages</title>
+        <link href="Stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/myStyle/Style.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="form-group">
+                <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li class="page-scroll">
+                                    <a href="homepage.xhtml">Home</a>
+                                </li>
+                                <li class="page-scroll">
+                                    <h:commandLink action="messages.xhtml" value="Messages"/>
+                                </li>
+                                <li class="page-scroll">
+                                    <h:commandLink action="settings.xhtml" value="Profile and Settings"/>
+                                </li>
+                                <li class="page-scroll">
+                                    <h:commandLink action="#{allUsers.logout()}" value="Logout"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </h:form>
+        <center>
+            <div class="container-fluid" style="margin-top: 85px">
+                <div>
+                    <h2>Messages</h2>
+                </div>
+                <div>
+                    <button onclick="showDiv(0)" style="width: 500px" class="btn btn-primary">New Message</button>
+                </div>
+                <div>
+                    <button onclick="showDiv(1)" style="width: 500px" class="btn btn-primary">Inbox</button>
+                </div>
+                <div>
+                    <button onclick="showDiv(2)" style="width: 500px" class="btn btn-primary">Sent</button>
+                </div>                   
+            </div>
+            <br></br>
+            <div id="inboxDiv" style="display: none"> 
+                <h:form>
+                    <h:dataTable value="#{allUsers.fetchInboxMessages()}" var="index" styleClass="table" class="table">
+                        <h:column>
+                            <f:facet name="header">From</f:facet>
+                                #{index.fromUser}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Message</f:facet>
+                                #{index.messageText}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Time</f:facet>
+                                #{index.period}
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div id="sentDiv" style="display: none"> 
+                <h:form>
+                    <h:dataTable value="#{allUsers.fetchSentMessages()}" var="index" styleClass="table" class="table">
+                        <h:column>
+                            <f:facet name="header">To</f:facet>
+                                #{index.toUser}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Message</f:facet>
+                                #{index.messageText}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Time</f:facet>
+                                #{index.period}
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div id="msgDiv" style="display: none">
+                <h:form>
+                    <div class="form-group">
+                        <h:outputLabel for="userDropdown" styleClass="control-label">Recipient</h:outputLabel>
+                        <h:selectOneMenu value="#{allUsers.recipient}" styleClass="form-control" id="userDropdown">
+                            <f:selectItems value="#{allUsers.arrUsers}"></f:selectItems>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="txtAreaMsg" styleClass="control-label">Text</h:outputLabel>
+                        <h:inputTextarea value="#{allUsers.messageString}" cols="15" rows="5" id="txtAreaMsg" styleClass="form-control"/>
+                    </div>
+                    <div>
+                        <h:commandButton value="Shoot" styleClass="btn btn-success" style="width: 200px" action="#{allUsers.shootMsg()}"/>
+                    </div>
+                </h:form>
+            </div>
+            <div>
+                <h:link outcome="homepage.xhtml">Back</h:link>
+            </div>
+            <div>
+                <h4><h:outputText value="#{allUsers.successMsg}" id="msgBottom"/></h4>
+            </div>
+        </center>        
+        <script src="Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+        <script src="Stylesheet/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script>
+                        function showDiv(i) {
+                            if (i == 0) {
+                                $("#inboxDiv").hide(500);
+                                $("#sentDiv").hide(500);
+                                $("#msgDiv").show(500);
+                            }
+                            if (i == 1) {
+                                $("#sentDiv").hide(500);
+                                $("#msgDiv").hide(500);
+                                $("#inboxDiv").show(500);
+                            }
+                            if (i == 2) {
+                                $("#inboxDiv").hide(500);
+                                $("#msgDiv").hide(500);
+                                $("#sentDiv").show(500);
+                            }
+                        }
+
+                        $("button").on("click", function () {
+                            $("#msgBottom").html("");
+                        });
+        </script>
+    </h:body>
+</html>
+

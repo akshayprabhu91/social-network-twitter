@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Login to Twitter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="refresh"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Stylesheet/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="Twitter icon" type="image/x-icon" href="Images/twitterico.ico" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="form-group">
+                <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header page-scroll">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-left">
+                                    <img src="Images/twitterico.ico" alt="Twitter"/><a class="navbar-brand" href="#page-top"/>
+                                    <li class="hidden">
+                                        <a href="#page-top"></a>
+                                    </li>
+                                    <li class="page-scroll">
+                                        <a href="index.xhtml">Home</a>
+                                    </li>
+                                    <li class="page-scroll">
+                                        <a href="signUp.xhtml">Sign Up</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <center>
+                <div class="panel panel-default" style="height: 330px; width: 800px; margin-top: 80px; margin-left: 80px; box-shadow: 0 0 100px #cccccc">
+                    <div class="panel-body">
+                        <div class="form-group" style="margin-top: 10px;margin-left: 230px" >
+                            <h2 style="text-align: left"><b>Login to Twitter</b></h2>
+                            <h:outputLabel value="#{allUsers.passResetmsgs}"></h:outputLabel>
+                            <h:outputLabel value="#{allUsers.errMsg}"></h:outputLabel>
+                        </div>        
+                        <div class="form-group" style="width: 300px">
+                            <h:message for="username"/>
+                            <h:inputText  p:placeholder="Username" style="border-style: inset" id="username" required ="true" 
+                                          requiredMessage="The login field cannot be empty"
+                                          validatorMessage="Username cannot have special characters"
+                                          title="Please enter your Login ID"
+                                          value="#{allUsers.userName}"
+                                          styleClass="form-control">
+                                <f:validateRegex pattern="^[a-zA-Z0-9_.]+$"/>
+                            </h:inputText>
+                        </div>
+                        <div class="form-group" style="width: 300px">
+                            <h:message for="password"/>
+                            <h:inputSecret p:placeholder="Password" style="border-style: inset" id="password" required ="true" 
+                                           requiredMessage="The password field cannot be empty"
+                                           title="Please enter your password"
+                                           value="#{allUsers.password}"
+                                           styleClass="form-control">
+                            </h:inputSecret>
+                        </div>
+                        <div class="form-group">
+                            <h:commandButton style="font-family: monospace; color: white; margin-right: 95px" id="submit" value="Log In"
+                                             action="#{allUsers.login()}" 
+                                             styleClass="btn btn-primary"/> &#xA0;&#xA0; <h:link outcome="ForgotPassword.xhtml">Forgot Password?</h:link>
+                        </div>
+                        <div class="panel-footer" style="margin-bottom: 90px;width: 780px">        
+                            <div class="form-group" >
+                                <p class="help-block" style="text-align: left">Go back to Home Page>> <h:link outcome="index.xhtml">Back</h:link></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+            </center>    
+        </h:form>
+        <script src="Scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+        <script src="Stylesheet/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    </h:body>
+</html>
+
